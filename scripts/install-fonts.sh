@@ -13,5 +13,4 @@ mv *.ttf ~/.local/share/fonts
 rm /tmp/*.xz
 rm /tmp/*.md
 
-fc-cache -fv
-
+fc-cache -frv

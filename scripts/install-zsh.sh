@@ -51,4 +51,3 @@ EOF
 rm $HOME/.profile $HOME/.wget-hsts
 
 source ~/.p10k.zsh
-

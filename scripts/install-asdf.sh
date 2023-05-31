@@ -2,6 +2,7 @@
 
 cd ~
 
+git config --global advice.detachedHead false
 git clone --depth=1 https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.3
 
 . ~/.asdf/asdf.sh
@@ -14,4 +15,3 @@ cat >> $HOME/.zshrc << EOF
 # Enable ASDF version manager
 . ~/.asdf/asdf.sh
 EOF
-

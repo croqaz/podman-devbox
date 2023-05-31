@@ -21,16 +21,18 @@ DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     libxml2-dev \
     libxmlsec1-dev \
     libxslt1-dev \
-    llvm \
     xz-utils \
     zlib1g-dev
+
+apt remove python3 --yes
+rm -rf /usr/lib/python3
+
 apt autoclean
-rm -rf /var/lib/apt/lists/*
+apt autoremove --yes
 
 . ~/.asdf/asdf.sh
 asdf plugin add python
 asdf install python latest:3.10
 asdf global python latest:3.10
 
-pip install --upgrade pip ipython
-
+pip install --upgrade pip virtualenv ipython

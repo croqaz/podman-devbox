@@ -1,35 +1,35 @@
-FROM debian:bullseye
+FROM ubuntu:22.04
 
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV LANG en_US.utf8
+ENV LC_ALL en_US.utf8
+ENV TZ Europe/London
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN echo "Europe/London" > /etc/timezone
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    apt-transport-https \
     automake \
     build-essential \
     bzip2 \
     ca-certificates \
     coreutils \
     curl \
-    fontconfig \
     git \
+    gnupg \
     gzip \
+    less \
     libtool \
+    llvm \
     locales \
     lsb-release \
-    neovim \
     openssh-client \
     patch \
     pkg-config \
-    software-properties-common \
     tar \
     tzdata \
     unzip \
     zip \
     wget \
-    zsh && \
-    rm -rf /var/lib/apt/lists/*
+    zsh
 
 WORKDIR "/root"
 
@@ -37,15 +37,18 @@ ADD scripts /tmp/scripts
 RUN chmod -R +rx /tmp/scripts
 
 RUN /tmp/scripts/fix-locales.sh && \
-    /tmp/scripts/install-fonts.sh && \
-    /tmp/scripts/install-zsh.sh
+    /tmp/scripts/install-zsh.sh && \
+    /tmp/scripts/install-neovim.sh
 
 RUN /tmp/scripts/install-asdf.sh
-RUN /tmp/scripts/install-asdf-python.sh
-RUN /tmp/scripts/install-asdf-node.sh
-RUN /tmp/scripts/install-asdf-aws.sh
 
-RUN rm -rf /tmp/scripts
+RUN /tmp/scripts/install-asdf-python.sh && \
+    /tmp/scripts/install-asdf-node.sh
+RUN /tmp/scripts/install-asdf-aws.sh && \
+    /tmp/scripts/install-asdf-gcloud.sh
+
+# cleanup ?
+# RUN rm -rf /tmp/scripts
+# RUN rm -rf /var/lib/apt/lists/*
 
 CMD ["zsh"]
-
