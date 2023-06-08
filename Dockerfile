@@ -3,10 +3,11 @@ FROM ubuntu:22.04
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
 ENV TZ Europe/London
-ENV DEBIAN_FRONTEND noninteractive
-
 RUN echo "Europe/London" > /etc/timezone
-RUN apt-get update && apt-get install -y --no-install-recommends \
+
+# Regular libraries
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     automake \
     build-essential \
     bzip2 \
@@ -21,6 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     llvm \
     locales \
     lsb-release \
+    make \
     openssh-client \
     patch \
     pkg-config \
@@ -31,24 +33,42 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     zsh
 
-WORKDIR "/root"
+# DEV libraries
+RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
+    libbz2-dev \
+    libffi-dev \
+    libfreetype6-dev \
+    libgdbm-dev \
+    libjpeg-dev \
+    liblzma-dev \
+    libncurses5-dev \
+    libnss3-dev \
+    libopenblas-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libtool \
+    libxml2-dev \
+    libxmlsec1-dev \
+    libxslt1-dev \
+    xz-utils \
+    zlib1g-dev
+
+RUN DEBIAN_FRONTEND=noninteractive apt remove python3 --yes && \
+    rm -rf /usr/lib/python3
+
+RUN apt autoclean && \
+    apt autoremove --yes
+
+# make sure to mount PWD like: -v `pwd`:/root/PWD
+WORKDIR "/root/PWD"
 
 ADD scripts /tmp/scripts
 RUN chmod -R +rx /tmp/scripts
 
 RUN /tmp/scripts/fix-locales.sh && \
-    /tmp/scripts/install-zsh.sh && \
     /tmp/scripts/install-neovim.sh
 
-RUN /tmp/scripts/install-asdf.sh
-
-RUN /tmp/scripts/install-asdf-python.sh && \
-    /tmp/scripts/install-asdf-node.sh
-RUN /tmp/scripts/install-asdf-aws.sh && \
-    /tmp/scripts/install-asdf-gcloud.sh
-
-# cleanup ?
-# RUN rm -rf /tmp/scripts
-# RUN rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/lib/apt/lists/*
 
 CMD ["zsh"]

@@ -36,7 +36,9 @@ cat >> $HOME/.zshrc << EOF
 # Set environment
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
-export SSH_KEY_PATH="~/.ssh/id_ecdsa"
+export SSH_KEY_PATH="$HOME/.ssh/id_ecdsa"
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=50000
 # Source Powerlevel10k config
 source ~/.p10k.zsh
 EOF
