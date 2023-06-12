@@ -14,6 +14,7 @@ RUN apt-get update && \
     ca-certificates \
     coreutils \
     curl \
+    direnv \
     git \
     gnupg \
     gzip \
@@ -25,12 +26,14 @@ RUN apt-get update && \
     make \
     openssh-client \
     patch \
+    pinentry-tty \
     pkg-config \
     tar \
     tzdata \
     unzip \
-    zip \
     wget \
+    xz-utils \
+    zip \
     zsh
 
 # DEV libraries
@@ -51,7 +54,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     libxml2-dev \
     libxmlsec1-dev \
     libxslt1-dev \
-    xz-utils \
     zlib1g-dev
 
 RUN DEBIAN_FRONTEND=noninteractive apt remove python3 --yes && \
