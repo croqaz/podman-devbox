@@ -36,6 +36,11 @@ RUN apt-get update && \
     zip \
     zsh
 
+RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+    sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8
+
 # DEV libraries
 RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     libbz2-dev \
@@ -68,8 +73,7 @@ WORKDIR "/root/PWD"
 ADD scripts /tmp/scripts
 RUN chmod -R +rx /tmp/scripts
 
-RUN /tmp/scripts/fix-locales.sh && \
-    /tmp/scripts/install-neovim.sh
+RUN /tmp/scripts/install-neovim.sh
 
 RUN rm -rf /var/lib/apt/lists/*
 
