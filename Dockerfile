@@ -1,17 +1,19 @@
-FROM ubuntu:22.04
+FROM ubuntu:23.10
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
 ENV TZ Europe/London
 RUN echo "Europe/London" > /etc/timezone
 
-# Regular libraries
+# Regular apps
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     automake \
     build-essential \
+    cmake \
     bzip2 \
     ca-certificates \
+    clang \
     coreutils \
     curl \
     direnv \
@@ -20,7 +22,6 @@ RUN apt-get update && \
     gzip \
     less \
     libtool \
-    llvm \
     locales \
     lsb-release \
     make \
@@ -49,9 +50,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     libgdbm-dev \
     libjpeg-dev \
     liblzma-dev \
+    libmagic-dev \
     libncurses5-dev \
     libnss3-dev \
     libopenblas-dev \
+    libopencv-dev \
+    libopenmpi-dev \
     libreadline-dev \
     libsqlite3-dev \
     libssl-dev \
