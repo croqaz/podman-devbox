@@ -12,7 +12,12 @@ Build image like:
 Use it like:
 
 ```sh
-$ podman run --rm -it --name DevBox --hostname DevBox --net=host -v $HOME/.aws:/root/.aws -v $HOME/.config/gcloud:/root/.config/gcloud -v $HOME/Dev:/root/Dev -v $HOME/Dev/DEVBOX:/root -v `pwd`:/root/PWD podman-devbox
+$ podman run --rm -it --name DevBox --hostname DevBox --pid=host --net=host \
+    -v $HOME/.aws:/root/.aws \
+    -v $HOME/.config/gcloud:/root/.config/gcloud \
+    -v $HOME/Dev:/root/Dev \
+    -v $HOME/Dev/DEVBOX:/root \
+    -v `pwd`:/root/PWD podman-devbox
 ```
 
 This command will inject your host AWS config and Gcloud config, to be used in the container.<br/>
