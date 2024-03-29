@@ -9,11 +9,12 @@ RUN echo "Europe/London" > /etc/timezone
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     automake \
+    binfmt-support \
     build-essential \
-    cmake \
     bzip2 \
     ca-certificates \
     clang \
+    cmake \
     coreutils \
     curl \
     direnv \
