@@ -1,4 +1,4 @@
-FROM ubuntu:23.10
+FROM ubuntu:noble
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8

@@ -2,6 +2,8 @@
 
 My attempt to create a DevBox.
 
+Tested with Podman and Nerdctl.
+
 
 ## Usage
 
